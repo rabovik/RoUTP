@@ -1,0 +1,3 @@
+[submodule "RoUTPTests/Support/OCMock"]
+	path = RoUTPTests/Support/OCMock
+	url = https://github.com/erikdoe/ocmock.git

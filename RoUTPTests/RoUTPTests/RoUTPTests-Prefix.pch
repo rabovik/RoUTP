@@ -1,0 +1,9 @@
+//
+// Prefix header for all source files of the 'RoUTPTests' target in the 'RoUTPTests' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <OCMock/OCMock.h>
+#endif
