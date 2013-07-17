@@ -1,6 +1,6 @@
 # Reliable-over-Unreliable Transport Protocol
 
-**RoUTP** is an Objective-C implementation of a simple _Reliable-over-Unreliable Transport Protocol_. Its primary goal is a workaround for _«GKMatch GKSendDataReliable packet loss bug»_ in Apple Game Center (see [SO question][SO] & [confirming example][GKMatchPacketLostExample]). But generally it may be used over any other unreliable protocol.
+**RoUTP** is an Objective-C implementation of a simple _Reliable-over-Unreliable Transport Protocol_. Its primary goal is a workaround for _«GKMatch GKMatchSendDataReliable packet loss bug»_ in Apple Game Center (see [SO question][SO] & [confirming example][GKMatchPacketLostExample]). But generally it may be used over any other unreliable protocol.
 
 ## How it works
 RoUTP acts as an additional transport layer between your app and unreliable transport. It saves all sent messages until acknowledgement for each received, resends lost and buffers received messages in case of broken sequence. Technically the sender numbers all sent messages and the receiver regularly sends positive [selective acknowledgments][SACK].
