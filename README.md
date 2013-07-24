@@ -41,8 +41,9 @@ Let's add RoUTP
 
 @implementation MyController
 -(void)someMethod{
-    // 4. Make a ROUSession instance
+    // 4. Make a ROUSession instance and set its delegate
     self.rouSession = [ROUSession new];
+    self.rouSession.delegate = self;
 }
 -(void)sendData:(NSData *)data{
     // 5. Send data to ROUSession instead of GKMatch
