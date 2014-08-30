@@ -40,7 +40,7 @@ Let's add RoUTP
 @end
 
 @implementation MyController
--(void)someMethod{
+-(void)startGame{
     // 4. Make a ROUSession instance and set its delegate
     self.rouSession = [ROUSession new];
     self.rouSession.delegate = self;
@@ -64,6 +64,11 @@ Let's add RoUTP
 -(void)session:(ROUSession *)session receivedData:(NSData *)data{
     // 8. Process ready data from ROUSession
     [self doSomethingWithReceivedData:data];
+}
+-(void)endGame{
+    // 9. Clean delegate and release session when it is no more needed.
+    self.rouSession.delegate = nil;
+    self.rouSession = nil;
 }
 @end
 ```
