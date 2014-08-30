@@ -190,5 +190,27 @@ static dispatch_block_t doneHandler = ^{
     [delegate verify];
 }
 
+#pragma mark - Test Memory Leak
+
+-(void)testSessionIsFinallyDeallocatedAfterRelease{
+    @autoreleasepool {
+        ROUSession *session = [ROUSession new];
+        __weak ROUSession *weakSession = session;
+        [session start];
+        // session schedules some work on its private queue, ...
+        dispatch_queue_t queue = session.queue;
+        dispatch_async(queue, ^{
+            // ... which should be done here, ...
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                         (int64_t)(0.001 * NSEC_PER_SEC)),
+                           queue, ^{
+                               // ... so here session should be finally deallocated.
+                               STAssertNil(weakSession, @"");
+                               doneHandler();
+            });
+        });
+    }
+    [self waitForCompletion:0.02];
+}
 
 @end

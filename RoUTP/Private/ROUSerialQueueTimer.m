@@ -15,7 +15,7 @@
 
 @interface ROUSerialQueueTimer ()
 @property (nonatomic,rou_dispatch_property_qualifier) dispatch_queue_t queue;
-@property (nonatomic,strong) id target;
+@property (nonatomic,weak) id target;
 @property (nonatomic) SEL selector;
 @property (nonatomic) NSTimeInterval timeInterval;
 @property (nonatomic) NSTimeInterval leeway;
@@ -82,14 +82,18 @@
 
 -(void)timerFired{
     self.lastFireDate = [NSDate date];
-    
-    NSMethodSignature *signature = [self.target
-                                    methodSignatureForSelector:self.selector];
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-    [invocation setTarget:self.target];
-    [invocation setSelector:self.selector];
-    [invocation setArgument:(void *)(&self) atIndex:2];
-    [invocation invoke];
+    id target = self.target;
+    if (target){
+        NSMethodSignature *signature = [target
+                                        methodSignatureForSelector:self.selector];
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+        [invocation setTarget:target];
+        [invocation setSelector:self.selector];
+        [invocation setArgument:(void *)(&self) atIndex:2];
+        [invocation invoke];
+    }else{
+        [self invalidate];
+    }
 }
 
 -(void)fire{
